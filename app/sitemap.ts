@@ -2,6 +2,8 @@ import { MetadataRoute } from 'next';
 import { fetchMatches } from '@/lib/api';
 import { todayYMD, toSlug } from '@/lib/utils';
 
+export const dynamic = 'force-static';
+
 const SITE_URL = 'https://www.cricfoot.net';
 
 const STATIC_LEAGUES = [

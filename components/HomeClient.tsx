@@ -125,7 +125,7 @@ export default function HomeClient({ allDayMatches }: Props) {
             <span className="count-badge">{allChannels.length}</span>
           </h2>
           <div className="channel-grid">
-            {allChannels.slice(0, 24).map(([ch, info]) => {
+            {allChannels.map(([ch, info]) => {
               const pop = isPopular(ch);
               return (
                 <Link

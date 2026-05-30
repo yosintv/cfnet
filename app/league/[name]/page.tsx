@@ -1,7 +1,21 @@
 import type { Metadata } from 'next';
 import { fetchMatches } from '@/lib/api';
-import { fromSlug, toSlug, toYMD } from '@/lib/utils';
+import { fromSlug, toSlug, toYMD, todayYMD } from '@/lib/utils';
 import LeaguePageClient from '@/components/LeaguePageClient';
+
+const STATIC_LEAGUES = [
+  'Premier League', 'UEFA Champions League', 'La Liga', 'Serie A',
+  'Bundesliga', 'Ligue 1', 'UEFA Europa League', 'FA Cup', 'Copa del Rey',
+  'Eredivisie', 'MLS', 'Liga MX', 'Brazilian Série A', 'Turkish Süper Lig',
+  'Scottish Premiership',
+];
+
+export async function generateStaticParams() {
+  const matches = await fetchMatches(todayYMD());
+  const leagues = new Set<string>(STATIC_LEAGUES);
+  matches.forEach(m => { if (m.league) leagues.add(m.league); });
+  return [...leagues].map(l => ({ name: toSlug(l) }));
+}
 
 interface Props {
   params: Promise<{ name: string }>;

@@ -3,6 +3,17 @@ import { fetchMatches } from '@/lib/api';
 import { todayYMD, fromSlug, toSlug, toYMD } from '@/lib/utils';
 import ChannelPageClient from '@/components/ChannelPageClient';
 
+export async function generateStaticParams() {
+  const matches = await fetchMatches(todayYMD());
+  const channels = new Set<string>();
+  matches.forEach(m =>
+    (m.tv_channels ?? []).forEach(tv =>
+      (tv.channels ?? []).forEach(ch => channels.add(ch))
+    )
+  );
+  return [...channels].map(ch => ({ name: toSlug(ch) }));
+}
+
 interface Props {
   params: Promise<{ name: string }>;
 }

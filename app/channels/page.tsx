@@ -14,13 +14,8 @@ export const metadata: Metadata = {
   alternates: { canonical: '/channels' },
 };
 
-interface Props {
-  searchParams: Promise<{ date?: string }>;
-}
-
-export default async function ChannelsPage({ searchParams }: Props) {
-  const { date } = await searchParams;
-  const ymd = date ?? todayYMD();
+export default async function ChannelsPage() {
+  const ymd = todayYMD();
   const matches = await fetchMatches(ymd);
   const chMap = buildChannelMap(matches);
 

@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
   schedule:
-    - cron: '0 3 * * *'   # Rebuild daily at 3 AM UTC for fresh match data
+    - cron: '0 0 */2 * *'   # Rebuilds every 2 days at 00:00 UTC for fresh match data
   workflow_dispatch:       # Allow manual trigger from GitHub Actions tab
 
 permissions:
@@ -35,7 +35,6 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          # Changed from /cfnet to / because you are now on a root domain
           NEXT_PUBLIC_BASE_PATH: "" 
 
       - name: Upload artifact
